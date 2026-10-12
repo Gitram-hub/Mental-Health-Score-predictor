@@ -1,14 +1,9 @@
-import psycopg2
 from psycopg2.extras import Json
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
-db_url = os.getenv("DATABASE_URL")
+from app.services.db_connection import get_db_connection
 
 
 def create_session(question: str, ambiguities: list) -> str:
-    conn = psycopg2.connect(db_url)
+    conn = get_db_connection()
     cur = conn.cursor()
     cur.execute(
         """
@@ -26,7 +21,7 @@ def create_session(question: str, ambiguities: list) -> str:
 
 
 def get_session(session_id: str) -> dict:
-    conn = psycopg2.connect(db_url)
+    conn = get_db_connection()
     cur = conn.cursor()
     cur.execute(
         """
@@ -52,7 +47,7 @@ def get_session(session_id: str) -> dict:
 
 
 def add_resolution(session_id: str, aspect: str, question: str, answer: str):
-    conn = psycopg2.connect(db_url)
+    conn = get_db_connection()
     cur = conn.cursor()
 
     cur.execute(

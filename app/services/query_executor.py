@@ -1,10 +1,5 @@
-import psycopg2
-from dotenv import load_dotenv
-import os
+from app.services.db_connection import get_db_connection
 from app.services.sql_validator import is_safe_sql
-
-load_dotenv()
-db_url = os.getenv("DATABASE_URL")
 
 
 def execute_query(sql_query: str):
@@ -12,7 +7,7 @@ def execute_query(sql_query: str):
     if not safe:
         raise ValueError(f"Query rejected: {reason}")
 
-    conn = psycopg2.connect(db_url)
+    conn = get_db_connection()
     cur = conn.cursor()
 
     cur.execute(sql_query)

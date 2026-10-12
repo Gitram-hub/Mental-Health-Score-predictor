@@ -1,13 +1,8 @@
-import psycopg2
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
-db_url = os.getenv("DATABASE_URL")
+from app.services.db_connection import get_db_connection
 
 
 def get_database_schema():
-    conn = psycopg2.connect(db_url)
+    conn = get_db_connection()
     cur = conn.cursor()
 
     cur.execute("""

@@ -1,12 +1,9 @@
 from datetime import date
 import json
-from groq import Groq
-from dotenv import load_dotenv
-import os
+from app.services.llm_client import get_groq_client
 from app.models.sql import SQLResult
 
-load_dotenv()
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+client = get_groq_client()
 
 
 SQL_PROMPT = """Today's date is {today}.. You are a PostgreSQL expert. Given a database schema and

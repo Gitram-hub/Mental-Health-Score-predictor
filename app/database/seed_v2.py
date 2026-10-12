@@ -1,13 +1,8 @@
-import psycopg2
-from dotenv import load_dotenv
-import os
+from app.services.db_connection import get_db_connection
 
-# to prevent hard coding database url we used .env file
-load_dotenv()
-db_url = os.getenv("DATABASE_URL")
-print("Connecting to:", db_url)
-# creates actual connection to database
-conn = psycopg2.connect(db_url)
+# Creates the connection using DATABASE_URL or the DB_* variables in .env.
+print("Connecting to the configured PostgreSQL database...")
+conn = get_db_connection()
 
 # to execute commands
 cur = conn.cursor()
